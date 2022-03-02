@@ -27,6 +27,44 @@ Simply locate UiTesSuite class from path in project = src/androidTest/java/com/t
 It appears kotlin does not work well with step definitions
 https://cucumber.io/docs/community/faq/
 
+# gradle(app level) Dependencies:
+This section highlights key dependencies that were used in Android automation with Espresso as tool of choice.
+
+ Test instrumentation runner:
+   - testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+   
+ Orchestrator:
+   - androidTestUtil('androidx.test:orchestrator:1.4.1')
+
+ BDD and Cucumber dependencies:
+   - testImplementation group: 'io.cucumber', name: 'cucumber-picocontainer', version: '7.2.3'
+    implementation group: 'io.cucumber', name: 'cucumber-android', version: '4.9.0'
+
+   - androidTestImplementation('info.cukes:cucumber-android:1.2.5') {
+        exclude module: 'cucumber-jvm-deps'
+    }
+   - androidTestImplementation 'info.cukes:cucumber-jvm-deps:1.0.5'
+
+   - testImplementation 'io.cucumber:cucumber-java
+
+Commented out dependencies:
+ - These have been left since i am not using the custom runner and also owing to issues with step definitions in kotlin
+
+    //def getTestTags() {
+    //    project.getProperties().get('tags') ?: ''
+    //}
+    //def getTestScenario() {
+    //    project.getProperties().get('scenario') ?: ''
+    //}
+
+    //def getInstrumentation() {
+    //    project.hasProperty('cucumber') ?
+    //            'com.test.news.cucumber.runner.CucumberTestRunner' :
+    //            'android.support.test.runner.AndroidJUnitRunner'
+    //}
+
+    // testInstrumentationRunner getInstrumentation() #TODO: Allows to toggle between @smoke and @e2e test
+    //  testInstrumentationRunner "com.test.news.cucumber.runner.CucumberTestRunner" //Owing to issue with step definition in cucumber kotlin, not used
 
 
 
