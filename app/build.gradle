@@ -21,10 +21,10 @@ android {
         buildConfigField 'String', 'SERVER_URL', "$FeedUrl"
     }
     buildTypes {
-        debug {
-            buildConfigField 'String', 'TEST_TAGS', '"' + getTestTags() + '"'
-            buildConfigField 'String', 'TEST_SCENARIO', '"' + getTestScenario() + '"'
-        }
+//        debug {
+//            buildConfigField 'String', 'TEST_TAGS', '"' + getTestTags() + '"'
+//            buildConfigField 'String', 'TEST_SCENARIO', '"' + getTestScenario() + '"'
+//        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -39,18 +39,18 @@ android {
     }
 }
 
-def getTestTags() {
-    project.getProperties().get('tags') ?: ''
-}
-def getTestScenario() {
-    project.getProperties().get('scenario') ?: ''
-}
-
-def getInstrumentation() {
-    project.hasProperty('cucumber') ?
-            'com.test.news.cucumber.runner.CucumberTestRunner' :
-            'android.support.test.runner.AndroidJUnitRunner'
-}
+//def getTestTags() {
+//    project.getProperties().get('tags') ?: ''
+//}
+//def getTestScenario() {
+//    project.getProperties().get('scenario') ?: ''
+//}
+//
+//def getInstrumentation() {
+//    project.hasProperty('cucumber') ?
+//            'com.test.news.cucumber.runner.CucumberTestRunner' :
+//            'android.support.test.runner.AndroidJUnitRunner'
+//}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
