@@ -1,95 +1,77 @@
-# Sliide QA Technical Test
-## Congratulations, you have reached the next stage which is solving a Sliide practical test.
-##### Please create your own repo and share the solution with us
+# QA-Sliide-Technical-test with Espresso
+Repository for the Sliide technical automation  task
+# Overview
+This project test task aims to exapnd on the automation of the News app with emphasis on the Login and News image features. There has been attempts to add Cucumber BDD to make tests readable for non-tech team members. Owing to issues faced with Cucumber for kotlin support in step definitions, the feature file part has not been completed fully but to be further improved once more information is gathered. See steps below how to run automation test with gradle
 
-### Description
-During the test we want you to imagine yourself as a member of our team, with a collective goal of getting our tasks completed. 
+# Tools used:
+- Android studio 4.2.0
+- Gradle 7.2
+- Kotlin 1.5.21 
+- JVM: 11.0.6 (Oracle Corporation 11.0.6+8-LTS)
+- Espresso
+- 
+# How to run automation tests using gradle cli:
+- From terminal run ./gradlew connectedDebugAndroidTest -Pcucumber -Ptags="@smoke" (The -Ptags parameter  allows to specify which tests to run i.e @smoke or @e2e)
 
-When we have reviewed your test, and any accompanying documents you feel necessary, if we like what we see, we’ll invite you to join us for a video conversation during which we’ll ask you to go through your test, explaining any decisions that you made.
-
-Let’s start!
-
-We are in the middle of the sprint and the following 2 user stories were just moved to the QA testing column on our Jira board:
-
-##
-### 1 - As a user I want to log in to the app
-
-#### Scenario 1 - user opens the android app first time (when not logged in yet)
-
-Given - the user opens app for the first time (when not logged in yet)
-
-Then - login screen with user name and password entries and login button is displayed
-
-#### Scenario 2 - user login failed
-
-Given - the user provided wrong user name and/or password
-
-When - login button is clicked
-
-Then - error markers are displayed by user name and/or password entries
-
-#### Scenario 3 - user login succeed (credentials provided below)
-
-Given - the user provided right user name and password
-
-When - login button is clicked
-
-Then - user is taken to the news screen
-
-#### Scenario 4 - user opens app next time (when previously logged in)
-
-Given - the user opens app next time (when previously logged in)
-
-Then - user is taken straight to the news screen
-
- ##
-
-### 2 - As a user I want to see my news
-
-#### Scenario 1 - news images are loaded
-
-Given - the user successfully logged in to the app
-
-When - there is internet connection
-
-Then - images are displayed in the rows on the list (row can have one or more images scrollable horizontally)
-
-#### Scenario 2 - failed to load images
-
-Given - the user successfully logged in to the app
-
-When - there is no internet connection
-
-Then - “failed to load news” error message is displayed and Retry button
-
-#### Scenario 3 - news image is clicked
-
-Given - the news images are successfully loaded on the screen
-
-When - the user clicks one of the image
-
-Then - user is navigated to the external browser with clicked image loaded
-
-#### Login credentials:
-#### user: password
-#### password: password
-
-##
-
-Now it’s your turn. You need to verify if we can move these two tickets to Done column on our Jira board.
-We expect that these functions will be tested both manually and automatically by you.
-
-### Manual tests - we expect that any bugs will be reported in clear form
-
-### Automated tests - using Espresso or any other tool of your choosing (explain why)
-
-* At Sliide we love clean code, so please try to write your tests neatly. 
-
-* It’s not mandatory but using an additional abstraction level for your tests (like your own framework to facilitate writing tests) will be very much appreciated
-
-* As a note, we won't consider any automation task submission created with a test recorder.
+# Gradle test run report
+<img width="1105" alt="Screenshot 2022-03-02 at 01 55 56" src="https://user-images.githubusercontent.com/37104303/156279937-90373845-f580-4594-bddb-07d14693a035.png">
 
 
-At Sliide we highly appreciate good communication at all times so, if you have any questions, don’t hesitate to ask   
+# How to run tests from UiTestSuite runner:
+Simply locate UiTesSuite class from path in project = src/androidTest/java/com/test/news/runner/UiTestSuite.kt. Right click on file and hit Run 'UiTestSuite'
 
-## Good luck!   
+# UiTestSuite test run results:
+<img width="612" alt="Screenshot 2022-03-02 at 01 55 11" src="https://user-images.githubusercontent.com/37104303/156280482-5d1ecd12-bd4d-4e1f-9281-9710edfafd79.png">
+
+# Reference about the step definition issue encountered in Cucumber for kotlin. 
+It appears kotlin does not work well with step definitions
+https://cucumber.io/docs/community/faq/
+
+# gradle(app level) Dependencies:
+This section highlights key dependencies that were used in Android automation with Espresso as tool of choice.
+
+ Test instrumentation runner:
+   - testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+   
+ Orchestrator:
+   - androidTestUtil('androidx.test:orchestrator:1.4.1')
+
+ BDD and Cucumber dependencies:
+   - testImplementation group: 'io.cucumber', name: 'cucumber-picocontainer', version: '7.2.3'
+    implementation group: 'io.cucumber', name: 'cucumber-android', version: '4.9.0'
+
+   - androidTestImplementation('info.cukes:cucumber-android:1.2.5') {
+        exclude module: 'cucumber-jvm-deps'
+    }
+   - androidTestImplementation 'info.cukes:cucumber-jvm-deps:1.0.5'
+
+   - testImplementation 'io.cucumber:cucumber-java
+
+Commented out dependencies:
+ - These have been left since i am not using the custom runner and also owing to issues with step definitions in kotlin
+
+    //def getTestTags() {
+    //    project.getProperties().get('tags') ?: ''
+    //}
+    //def getTestScenario() {
+    //    project.getProperties().get('scenario') ?: ''
+    //}
+
+    //def getInstrumentation() {
+    //    project.hasProperty('cucumber') ?
+    //            'com.test.news.cucumber.runner.CucumberTestRunner' :
+    //            'android.support.test.runner.AndroidJUnitRunner'
+    //}
+
+    // testInstrumentationRunner getInstrumentation() #TODO: Allows to toggle between @smoke and @e2e test
+    //  testInstrumentationRunner "com.test.news.cucumber.runner.CucumberTestRunner" //Owing to issue with step definition in cucumber kotlin, not used
+    
+     //   debug {
+    //            buildConfigField 'String', 'TEST_TAGS', '"' + getTestTags() + '"'
+    //            buildConfigField 'String', 'TEST_SCENARIO', '"' + getTestScenario() + '"'
+    //        }
+
+
+
+
+
