@@ -22,10 +22,10 @@ class CucumberTestRunner : AndroidJUnitRunner() {
         }
 
         var scenario: String = BuildConfig.TEST_SCENARIO
-            if (!scenario.isEmpty()) {
-                scenario = scenario.replace(" ", "\\\\s");
-                bundle.putString(CUCUMBER_SCENARIO_KEY, scenario)
-            }
+        if (!scenario.isEmpty()) {
+            scenario = scenario.replace(" ", "\\\\s");
+            bundle.putString(CUCUMBER_SCENARIO_KEY, scenario)
+        }
 
         instrumentationCore.create(bundle)
         super.onCreate(bundle)

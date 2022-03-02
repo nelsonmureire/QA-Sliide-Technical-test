@@ -5,10 +5,12 @@ import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
 @RunWith(Suite::class)
-@Suite.SuiteClasses(FirstTimeAppLaunchNoLogin::class,
+@Suite.SuiteClasses(
+    FirstTimeAppLaunchNoLogin::class,
     UserLoginFailed::class,
     UserLoginSucceeded::class,
     UserOpensAppNextTime::class,
-    NewsImageIsClicked::class)
+    NewsImageIsClicked::class
+)
 
 class UiTestSuite
