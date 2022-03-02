@@ -65,6 +65,11 @@ Commented out dependencies:
 
     // testInstrumentationRunner getInstrumentation() #TODO: Allows to toggle between @smoke and @e2e test
     //  testInstrumentationRunner "com.test.news.cucumber.runner.CucumberTestRunner" //Owing to issue with step definition in cucumber kotlin, not used
+    
+     //   debug {
+    //            buildConfigField 'String', 'TEST_TAGS', '"' + getTestTags() + '"'
+    //            buildConfigField 'String', 'TEST_SCENARIO', '"' + getTestScenario() + '"'
+    //        }
 
 
 
