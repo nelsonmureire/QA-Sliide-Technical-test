@@ -1,0 +1,121 @@
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+}
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    defaultConfig {
+        applicationId "com.test.news"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+//        testInstrumentationRunner getInstrumentation()
+//        testInstrumentationRunner "com.test.news.cucumber.runner.CucumberTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+        buildConfigField 'String', 'SERVER_URL', "$FeedUrl"
+    }
+    buildTypes {
+        debug {
+            buildConfigField 'String', 'TEST_TAGS', '"' + getTestTags() + '"'
+            buildConfigField 'String', 'TEST_SCENARIO', '"' + getTestScenario() + '"'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+def getTestTags() {
+    project.getProperties().get('tags') ?: ''
+}
+def getTestScenario() {
+    project.getProperties().get('scenario') ?: ''
+}
+
+def getInstrumentation() {
+    project.hasProperty('cucumber') ?
+            'com.test.news.cucumber.runner.CucumberTestRunner' :
+            'android.support.test.runner.AndroidJUnitRunner'
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation deps.dagger.runtime
+    implementation deps.dagger.android
+    implementation deps.dagger.android_support
+    implementation deps.lifecycle.runtime
+    implementation deps.lifecycle.extensions
+    implementation deps.retrofit.gson
+    implementation deps.retrofit.rxjava2adapter
+    implementation deps.rxjava.rxjava2
+    implementation deps.rxjava.rxrelay2
+    implementation deps.rxjava.rx_android
+    implementation deps.timber
+    implementation deps.okhttp_logging_interceptor
+    implementation deps.kotlin.stdlib
+    implementation deps.support.app_compat
+    implementation deps.support.recycler_view
+    implementation deps.support.design
+    implementation deps.constraint_layout
+    implementation deps.glide.runtime
+    implementation deps.glide.okhttp_integration
+    implementation deps.room.runtime
+    implementation deps.room.rxjava2
+    implementation deps.glide.runtime
+    implementation deps.glide.okhttp_integration
+    implementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
+    implementation 'androidx.test.espresso:espresso-intents:3.4.0'
+
+    debugImplementation deps.leakcanary.debug
+
+    kapt deps.dagger.android_support_compiler
+    kapt deps.dagger.compiler
+    kapt deps.lifecycle.compiler
+    kapt deps.glide.compiler
+    kapt deps.room.compiler
+    kapt deps.glide.compiler
+
+    testImplementation deps.junit
+    testImplementation deps.mockito.core
+    testImplementation deps.mockito.inline
+    testImplementation deps.arch_core
+
+    androidTestImplementation deps.espresso.junit_ext
+    androidTestImplementation deps.espresso.core
+    androidTestImplementation deps.test_rules
+    androidTestImplementation('androidx.test.espresso:espresso-web:3.4.0')
+    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.4.0@aar')
+
+    // Orchestrator
+    androidTestUtil('androidx.test:orchestrator:1.4.1')
+
+    //BDD and Cucumber dependencies
+    testImplementation group: 'io.cucumber', name: 'cucumber-picocontainer', version: '7.2.3'
+    implementation group: 'io.cucumber', name: 'cucumber-android', version: '4.9.0'
+
+    androidTestImplementation('info.cukes:cucumber-android:1.2.5') {
+        exclude module: 'cucumber-jvm-deps'
+    }
+    androidTestImplementation 'info.cukes:cucumber-jvm-deps:1.0.5'
+
+    testImplementation 'io.cucumber:cucumber-java:6.1.1'
+
+
+}
