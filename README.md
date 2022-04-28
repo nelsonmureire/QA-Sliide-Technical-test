@@ -1,5 +1,5 @@
-# Android-Cucumber-Kotlin
-Repository for the Sliide technical automation  task
+# Android-Cucumber-Kotlin-espresso
+Repository for Android-cucumber-kotlin using espresso
 # Overview
 This project test task aims to exapnd on the automation of the News app with emphasis on the Login and News image features. There has been attempts to add Cucumber BDD to make tests readable for non-tech team members. Owing to issues faced with Cucumber for kotlin support in step definitions, the feature file part has not been completed fully but to be further improved once more information is gathered. See steps below how to run automation test with gradle
 
